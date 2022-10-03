@@ -63,6 +63,9 @@ macro_rules! impl_inner_method {
             AnyBlockchain::CompactFilters(inner) => inner.$name( $($args, )* ),
             #[cfg(feature = "rpc")]
             AnyBlockchain::Rpc(inner) => inner.$name( $($args, )* ),
+            #[cfg(feature = "utreexo")]
+            AnyBlockchain::Utreexo(inner) => inner.$name( $($args, )* ),
+
         }
     }
 }
@@ -89,6 +92,9 @@ pub enum AnyBlockchain {
     #[cfg_attr(docsrs, doc(cfg(feature = "rpc")))]
     /// RPC client
     Rpc(Box<rpc::RpcBlockchain>),
+    /// Utreexo client, provided by the `rustreexo` dependency
+    #[cfg(feature = "utreexo")]
+    Utreexo(utreexo::UtreexoBlockchain),
 }
 
 #[maybe_async]

@@ -12,6 +12,7 @@
 use std::fmt;
 
 use crate::bitcoin::Network;
+use crate::blockchain::utreexo;
 use crate::{descriptor, wallet, wallet::address_validator};
 use bitcoin::{OutPoint, Txid};
 
@@ -147,6 +148,9 @@ pub enum Error {
     #[cfg(feature = "sqlite")]
     /// Rusqlite client error
     Rusqlite(rusqlite::Error),
+    #[cfg(feature = "utreexo")]
+    /// An error yield by the utreexo backend
+    UtreexoError(utreexo::UtreexoError),
 }
 
 /// Represents the last failed [`crate::blockchain::WalletSync`] sync attempt in which we were short
